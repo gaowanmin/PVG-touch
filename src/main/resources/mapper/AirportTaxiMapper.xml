@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.AirportTaxiMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.AirportTaxi" >
+    <id column="AIRPORT_TAXI_ID" property="airportTaxiId" jdbcType="INTEGER" />
+    <result column="AIRPORT" property="airport" jdbcType="VARCHAR" />
+    <result column="TERMINAL" property="terminal" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="AIRPORT_NAME" property="airportName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AIRPORT_TAXI_ID, AIRPORT, TERMINAL, ADDRESS, AIRPORT_NAME
+  </sql>
+  	<!-- 获取出租车地址 -->
+	<select id="selectByTaxiAddress" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from pvg_airport_taxi where AIRPORT = (select p.AIRPORT_CODE from pvg_airport p)
+	</select>
+	
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pvg_airport_taxi
+    where AIRPORT_TAXI_ID = #{airportTaxiId,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.AirportTaxi" >
+    insert into pvg_airport_taxi
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="airportTaxiId != null" >
+        AIRPORT_TAXI_ID,
+      </if>
+      <if test="airport != null" >
+        AIRPORT,
+      </if>
+      <if test="terminal != null" >
+        TERMINAL,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="airportName != null" >
+        AIRPORT_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="airportTaxiId != null" >
+        #{airportTaxiId,jdbcType=INTEGER},
+      </if>
+      <if test="airport != null" >
+        #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="terminal != null" >
+        #{terminal,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="airportName != null" >
+        #{airportName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.AirportTaxi" >
+    update pvg_airport_taxi
+    <set >
+      <if test="airport != null" >
+        AIRPORT = #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="terminal != null" >
+        TERMINAL = #{terminal,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="airportName != null" >
+        AIRPORT_NAME = #{airportName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AIRPORT_TAXI_ID = #{airportTaxiId,jdbcType=INTEGER}
+  </update>
+</mapper>

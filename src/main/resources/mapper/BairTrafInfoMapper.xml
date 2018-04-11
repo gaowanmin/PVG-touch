@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.BairTrafInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.BairTrafInfo" >
+    <id column="AIR_TRAF_ID" property="airTrafId" jdbcType="BIGINT" />
+    <result column="AIRPORT" property="airport" jdbcType="VARCHAR" />
+    <result column="PICTURE_NAME" property="pictureName" jdbcType="VARCHAR" />
+    <result column="PICTURE_URL" property="pictureUrl" jdbcType="VARCHAR" />
+    <result column="SERVICE_CODE" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="AIRPORT_NAME" property="airportName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AIR_TRAF_ID, AIRPORT, PICTURE_NAME, PICTURE_URL, SERVICE_CODE, TITLE, SORT, AIRPORT_NAME
+  </sql>
+  
+  <!-- 根据机场三字码获取交通信息 -->
+  <select id="selectTrafInfoByAirport" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from pvg_air_traf_info where AIRPORT = (select p.AIRPORT_CODE from pvg_airport p) ORDER BY SORT limit 5;
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pvg_air_traf_info
+    where AIR_TRAF_ID = #{airTrafId,jdbcType=BIGINT}
+  </select>
+  
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.BairTrafInfo" >
+    insert into pvg_air_traf_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="airTrafId != null" >
+        AIR_TRAF_ID,
+      </if>
+      <if test="airport != null" >
+        AIRPORT,
+      </if>
+      <if test="pictureName != null" >
+        PICTURE_NAME,
+      </if>
+      <if test="pictureUrl != null" >
+        PICTURE_URL,
+      </if>
+      <if test="serviceCode != null" >
+        SERVICE_CODE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="airportName != null" >
+        AIRPORT_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="airTrafId != null" >
+        #{airTrafId,jdbcType=BIGINT},
+      </if>
+      <if test="airport != null" >
+        #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureName != null" >
+        #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="airportName != null" >
+        #{airportName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.BairTrafInfo" >
+    update pvg_air_traf_info
+    <set >
+      <if test="airport != null" >
+        AIRPORT = #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureName != null" >
+        PICTURE_NAME = #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        PICTURE_URL = #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="airportName != null" >
+        AIRPORT_NAME = #{airportName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AIR_TRAF_ID = #{airTrafId,jdbcType=BIGINT}
+  </update>
+</mapper>

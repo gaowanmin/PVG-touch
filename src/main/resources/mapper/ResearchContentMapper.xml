@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.ResearchContentMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.ResearchContent" >
+    <id column="CONTENT_ID" property="contentId" jdbcType="BIGINT" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="parent_content_id" property="parentContentId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CONTENT_ID, CONTENT, parent_content_id, create_time, update_time
+  </sql>
+  
+  <!-- 根目录标题列表  -->
+  <select id="selectRootTiltle" resultMap="BaseResultMap">
+  	 select <include refid="Base_Column_List" /> from pvg_research_content where parent_content_id is null
+  </select>
+  
+  <!-- 获取调查问卷的问题  -->
+  <select id="selectResearchContent" resultMap="BaseResultMap" parameterType="java.lang.Long">
+  	 select <include refid="Base_Column_List" /> from pvg_research_content where parent_content_id = #{parentContentId,jdbcType=BIGINT} ORDER BY CONTENT_ID
+  </select>
+
+    <!-- 查询所有题目-->
+    <select id="selectAllChildContent" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from pvg_research_content where parent_content_id is not null ORDER BY CONTENT_ID
+    </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pvg_research_content
+    where CONTENT_ID = #{contentId,jdbcType=BIGINT}
+  </select>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.ResearchContent" >
+    insert into pvg_research_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="contentId != null" >
+        CONTENT_ID,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="parentContentId != null" >
+        parent_content_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="contentId != null" >
+        #{contentId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="parentContentId != null" >
+        #{parentContentId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.ResearchContent" >
+    update pvg_research_content
+    <set >
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="parentContentId != null" >
+        parent_content_id = #{parentContentId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CONTENT_ID = #{contentId,jdbcType=BIGINT}
+  </update>
+</mapper>

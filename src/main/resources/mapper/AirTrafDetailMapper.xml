@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.AirTrafDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.AirTrafDetail" >
+    <id column="DETAIL_ID" property="detailId" jdbcType="BIGINT" />
+    <result column="AIR_TRAF_ID" property="airTrafId" jdbcType="BIGINT" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DETAIL_ID, AIR_TRAF_ID, SORT, TITLE, CONTENT
+  </sql>
+  
+  <!-- 根据详情id获取详情信息 -->
+  <select id="selectByAirTrafId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+  	select <include refid="Base_Column_List"/> from pvg_air_traf_detail where AIR_TRAF_ID=#{airTrafId,jdbcType=BIGINT} ORDER BY sort ASC
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pvg_air_traf_detail
+    where DETAIL_ID = #{detailId,jdbcType=BIGINT}
+  </select>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.AirTrafDetail" >
+    insert into pvg_air_traf_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        DETAIL_ID,
+      </if>
+      <if test="airTrafId != null" >
+        AIR_TRAF_ID,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="airTrafId != null" >
+        #{airTrafId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.AirTrafDetail" >
+    update pvg_air_traf_detail
+    <set >
+      <if test="airTrafId != null" >
+        AIR_TRAF_ID = #{airTrafId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DETAIL_ID = #{detailId,jdbcType=BIGINT}
+  </update>
+</mapper>

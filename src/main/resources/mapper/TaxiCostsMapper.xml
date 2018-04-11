@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.TaxiCostsMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.TaxiCosts" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="AIRPORT" property="airport" jdbcType="VARCHAR" />
+    <result column="TERMINAL" property="terminal" jdbcType="VARCHAR" />
+    <result column="AIRPORT_NAME" property="airportName" jdbcType="VARCHAR" />
+    <result column="END" property="end" jdbcType="VARCHAR" />
+    <result column="END_EN" property="endEn" jdbcType="VARCHAR" />
+    <result column="DISTANCE" property="distance" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="VARCHAR" />
+    <result column="NIGHT_PRICE" property="nightPrice" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, AIRPORT, TERMINAL, AIRPORT_NAME, END, END_EN, DISTANCE, PRICE, NIGHT_PRICE
+  </sql>
+  
+  <!-- 上海机场到核心地段打车费用 -->
+  <select id="selectToCoreLot" resultMap="BaseResultMap">
+  	select  <include refid="Base_Column_List" /> from pvg_taxi_costs where AIRPORT = (select p.AIRPORT_CODE from pvg_airport p)
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pvg_taxi_costs
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.TaxiCosts" >
+    insert into pvg_taxi_costs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="airport != null" >
+        AIRPORT,
+      </if>
+      <if test="terminal != null" >
+        TERMINAL,
+      </if>
+      <if test="airportName != null" >
+        AIRPORT_NAME,
+      </if>
+      <if test="end != null" >
+        END,
+      </if>
+      <if test="endEn != null" >
+        END_EN,
+      </if>
+      <if test="distance != null" >
+        DISTANCE,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="nightPrice != null" >
+        NIGHT_PRICE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="airport != null" >
+        #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="terminal != null" >
+        #{terminal,jdbcType=VARCHAR},
+      </if>
+      <if test="airportName != null" >
+        #{airportName,jdbcType=VARCHAR},
+      </if>
+      <if test="end != null" >
+        #{end,jdbcType=VARCHAR},
+      </if>
+      <if test="endEn != null" >
+        #{endEn,jdbcType=VARCHAR},
+      </if>
+      <if test="distance != null" >
+        #{distance,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="nightPrice != null" >
+        #{nightPrice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.TaxiCosts" >
+    update pvg_taxi_costs
+    <set >
+      <if test="airport != null" >
+        AIRPORT = #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="terminal != null" >
+        TERMINAL = #{terminal,jdbcType=VARCHAR},
+      </if>
+      <if test="airportName != null" >
+        AIRPORT_NAME = #{airportName,jdbcType=VARCHAR},
+      </if>
+      <if test="end != null" >
+        END = #{end,jdbcType=VARCHAR},
+      </if>
+      <if test="endEn != null" >
+        END_EN = #{endEn,jdbcType=VARCHAR},
+      </if>
+      <if test="distance != null" >
+        DISTANCE = #{distance,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="nightPrice != null" >
+        NIGHT_PRICE = #{nightPrice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

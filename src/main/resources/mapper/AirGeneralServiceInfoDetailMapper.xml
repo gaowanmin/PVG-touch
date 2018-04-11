@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.AirGeneralServiceInfoDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.AirGeneralServiceInfoDetail" >
+    <id column="AIR_SERVICE_detail_ID" property="airServiceDetailId" jdbcType="BIGINT" />
+    <result column="air_Service_Id" property="airServiceId" jdbcType="BIGINT" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="CONTETN_NO_HTML" property="contetnNoHtml" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AIR_SERVICE_detail_ID, air_Service_Id, sort, title, key_word, content, CONTETN_NO_HTML
+  </sql>
+  
+  <!-- 根据服务类型id查询详情信息 -->
+  <select id="getDetailInfoByAirServiceId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pvg_air_general_service_info_detail
+    where air_Service_Id = #{airServiceId,jdbcType=BIGINT} order by `sort` ASC
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pvg_air_general_service_info_detail
+    where AIR_SERVICE_detail_ID = #{airServiceDetailId,jdbcType=BIGINT}
+  </select>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.AirGeneralServiceInfoDetail" >
+    insert into pvg_air_general_service_info_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="airServiceDetailId != null" >
+        AIR_SERVICE_detail_ID,
+      </if>
+      <if test="airServiceId != null" >
+        air_Service_Id,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="keyWord != null" >
+        key_word,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="contetnNoHtml != null" >
+        CONTETN_NO_HTML,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="airServiceDetailId != null" >
+        #{airServiceDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="airServiceId != null" >
+        #{airServiceId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contetnNoHtml != null" >
+        #{contetnNoHtml,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.AirGeneralServiceInfoDetail" >
+    update pvg_air_general_service_info_detail
+    <set >
+      <if test="airServiceId != null" >
+        air_Service_Id = #{airServiceId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        key_word = #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contetnNoHtml != null" >
+        CONTETN_NO_HTML = #{contetnNoHtml,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where AIR_SERVICE_detail_ID = #{airServiceDetailId,jdbcType=BIGINT}
+  </update>
+</mapper>

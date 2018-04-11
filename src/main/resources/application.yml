@@ -1,0 +1,116 @@
+
+logging:
+  level:
+    org.springframework: INFO
+    org.mybatis: INFO
+    org.springframework.boot.autoconfigure.logging: WARN
+    root: WARN
+    com.jolbox.bonecp: INFO
+    com.rtmap.traffic.touch: debug
+
+mybatis:
+  mapper-locations: 'classpath:mapper/*.xml'
+#  type-aliases-package: classpath:com.rtmap.traffic.touch.model.entity
+  config-location: 'classpath:mybatis-config.xml'
+
+
+spring:
+  profiles:
+     active: dev
+---
+spring:
+  profiles: dev
+
+jdbc:
+    username: root
+    password: traffic
+    url: jdbc:mysql://101.200.191.19:3306/pvg?allowMultiQueries=true&autoReconnect=true&characterEncoding=utf8&characterSetResults=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    driver: com.mysql.jdbc.Driver
+    initialize: false
+    initialSize: 3
+    minIdle: 3
+    maxActive: 10
+    maxWait: 30000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat
+
+logging:
+  file: /Users/rtmap/xuhailong/logs/touch/PVG-touch-dev.log
+
+server:
+  port: 9000
+#  context-path: /pvg-touch
+
+module:
+  updateTime:
+    #航班查询 单位(分)
+    flt: 10
+    #热门城市 单位(天)
+    hotCity: 1
+    #交通 单位(天)
+    traffic: 1
+    #问卷 单位(天)
+    research: 1
+    #服务 单位(天)
+    service: 1
+
+weather:
+  forecastUrl: https://free-api.heweather.com/v5/forecast
+  suggestionUrl: https://free-api.heweather.com/v5/suggestion
+  key: 5e53f60ac7454df4b85975d35340780a
+  location: 北京
+
+---
+spring:
+  profiles: product
+
+jdbc:
+    username: aps
+    password: aps123
+    url: jdbc:mysql://10.169.1.25:3306/pvg_self_service?allowMultiQueries=true&autoReconnect=true&characterEncoding=utf8&characterSetResults=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    driver: com.mysql.jdbc.Driver
+    initialize: false
+    initialSize: 20
+    minIdle: 5
+    maxActive: 50
+    maxWait: 30000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat
+
+logging:
+  file: C:/logs/PVG-touch-product.log
+
+# 目前 正式环境 9000（老） 和 9001（新 2018-01-15起用） 端口在用
+server:
+  port: 9001
+#  context-path: /pvg-touch
+
+
+module:
+  updateTime:
+    #航班查询 单位(分)
+    flt: 10
+    #热门城市 单位(天)
+    hotCity: 1
+    #交通 单位(天)
+    traffic: 1
+    #问卷 单位(天)
+    research: 1
+    #服务 单位(天)
+    service: 1
+
+weather:
+  forecastUrl: https://free-api.heweather.com/v5/forecast
+  suggestionUrl: https://free-api.heweather.com/v5/suggestion
+  key: 5e53f60ac7454df4b85975d35340780a
+  location: 上海

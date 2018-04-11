@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.FlightDynInfoTempMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.FlightDynInfoTemp" >
+    <id column="flight_id" property="flightId" jdbcType="BIGINT" />
+    <result column="flight_no" property="flightNo" jdbcType="VARCHAR" />
+    <result column="flight_date" property="flightDate" jdbcType="VARCHAR" />
+    <result column="airport_code" property="airportCode" jdbcType="VARCHAR" />
+    <result column="adid" property="adid" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="ori_airport" property="oriAirport" jdbcType="VARCHAR" />
+    <result column="des_airport" property="desAirport" jdbcType="VARCHAR" />
+    <result column="ori_city" property="oriCity" jdbcType="VARCHAR" />
+    <result column="des_city" property="desCity" jdbcType="VARCHAR" />
+    <result column="flight_status" property="flightStatus" jdbcType="VARCHAR" />
+    <result column="total_mileage" property="totalMileage" jdbcType="VARCHAR" />
+    <result column="ontime_percent" property="ontimePercent" jdbcType="VARCHAR" />
+    <result column="has_fly_time" property="hasFlyTime" jdbcType="INTEGER" />
+    <result column="last_fly_time" property="lastFlyTime" jdbcType="INTEGER" />
+    <result column="plan_takeoff_time" property="planTakeoffTime" jdbcType="TIMESTAMP" />
+    <result column="plan_land_time" property="planLandTime" jdbcType="TIMESTAMP" />
+    <result column="wheels_up_time" property="wheelsUpTime" jdbcType="TIMESTAMP" />
+    <result column="wheels_down_time" property="wheelsDownTime" jdbcType="TIMESTAMP" />
+    <result column="est_dep_time" property="estDepTime" jdbcType="TIMESTAMP" />
+    <result column="est_arr_time" property="estArrTime" jdbcType="TIMESTAMP" />
+    <result column="checkin_desk_range" property="checkinDeskRange" jdbcType="VARCHAR" />
+    <result column="ori_terminal" property="oriTerminal" jdbcType="VARCHAR" />
+    <result column="des_terminal" property="desTerminal" jdbcType="VARCHAR" />
+    <result column="flight_sector_code" property="flightSectorCode" jdbcType="VARCHAR" />
+    <result column="gn" property="gn" jdbcType="VARCHAR" />
+    <result column="baggage_carousel" property="baggageCarousel" jdbcType="VARCHAR" />
+    <result column="linked_flight_identity" property="linkedFlightIdentity" jdbcType="VARCHAR" />
+    <result column="pre_flight_status_desc" property="preFlightStatusDesc" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ori_city_time" property="oriCityTime" jdbcType="VARCHAR" />
+    <result column="des_city_time" property="desCityTime" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!--航班查询返回 map-->
+  <resultMap id="QueryFlightMap" type="com.rtmap.traffic.touch.model.vo.FlightQueryVo" >
+    <id column="flight_id" property="flightId" jdbcType="BIGINT" />
+    <result column="flight_no" property="flightNo" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="ori_city" property="oriCity" jdbcType="VARCHAR" />
+    <result column="des_city" property="desCity" jdbcType="VARCHAR" />
+    <result column="flight_status" property="flightStatus" jdbcType="VARCHAR" />
+    <result column="plan_takeoff_time" property="planTakeoffTime" jdbcType="TIMESTAMP" />
+    <result column="plan_land_time" property="planLandTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    flight_id, flight_no, flight_date, airport_code, adid, company, ori_airport, des_airport, 
+    ori_city, des_city, flight_status, total_mileage, ontime_percent, has_fly_time, last_fly_time, 
+    plan_takeoff_time, plan_land_time, wheels_up_time, wheels_down_time, est_dep_time, 
+    est_arr_time, checkin_desk_range, ori_terminal, des_terminal, flight_sector_code, 
+    gn, baggage_carousel, linked_flight_identity, pre_flight_status_desc, update_time,
+    ori_city_time, des_city_time
+  </sql>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.FlightDynInfoTemp" >
+    insert into pvg_flight_dyn_info_temp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="flightId != null" >
+        flight_id,
+      </if>
+      <if test="flightNo != null" >
+        flight_no,
+      </if>
+      <if test="flightDate != null" >
+        flight_date,
+      </if>
+      <if test="airportCode != null" >
+        airport_code,
+      </if>
+      <if test="adid != null" >
+        adid,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="oriAirport != null" >
+        ori_airport,
+      </if>
+      <if test="desAirport != null" >
+        des_airport,
+      </if>
+      <if test="oriCity != null" >
+        ori_city,
+      </if>
+      <if test="desCity != null" >
+        des_city,
+      </if>
+      <if test="flightStatus != null" >
+        flight_status,
+      </if>
+      <if test="totalMileage != null" >
+        total_mileage,
+      </if>
+      <if test="ontimePercent != null" >
+        ontime_percent,
+      </if>
+      <if test="hasFlyTime != null" >
+        has_fly_time,
+      </if>
+      <if test="lastFlyTime != null" >
+        last_fly_time,
+      </if>
+      <if test="planTakeoffTime != null" >
+        plan_takeoff_time,
+      </if>
+      <if test="planLandTime != null" >
+        plan_land_time,
+      </if>
+      <if test="wheelsUpTime != null" >
+        wheels_up_time,
+      </if>
+      <if test="wheelsDownTime != null" >
+        wheels_down_time,
+      </if>
+      <if test="estDepTime != null" >
+        est_dep_time,
+      </if>
+      <if test="estArrTime != null" >
+        est_arr_time,
+      </if>
+      <if test="checkinDeskRange != null" >
+        checkin_desk_range,
+      </if>
+      <if test="oriTerminal != null" >
+        ori_terminal,
+      </if>
+      <if test="desTerminal != null" >
+        des_terminal,
+      </if>
+      <if test="flightSectorCode != null" >
+        flight_sector_code,
+      </if>
+      <if test="gn != null" >
+        gn,
+      </if>
+      <if test="baggageCarousel != null" >
+        baggage_carousel,
+      </if>
+      <if test="linkedFlightIdentity != null" >
+        linked_flight_identity,
+      </if>
+      <if test="preFlightStatusDesc != null" >
+        pre_flight_status_desc,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="oriCityTime != null" >
+        ori_city_time,
+      </if>
+      <if test="desCityTime != null" >
+        des_city_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="flightId != null" >
+        #{flightId,jdbcType=BIGINT},
+      </if>
+      <if test="flightNo != null" >
+        #{flightNo,jdbcType=VARCHAR},
+      </if>
+      <if test="flightDate != null" >
+        #{flightDate,jdbcType=VARCHAR},
+      </if>
+      <if test="airportCode != null" >
+        #{airportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="adid != null" >
+        #{adid,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="oriAirport != null" >
+        #{oriAirport,jdbcType=VARCHAR},
+      </if>
+      <if test="desAirport != null" >
+        #{desAirport,jdbcType=VARCHAR},
+      </if>
+      <if test="oriCity != null" >
+        #{oriCity,jdbcType=VARCHAR},
+      </if>
+      <if test="desCity != null" >
+        #{desCity,jdbcType=VARCHAR},
+      </if>
+      <if test="flightStatus != null" >
+        #{flightStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMileage != null" >
+        #{totalMileage,jdbcType=VARCHAR},
+      </if>
+      <if test="ontimePercent != null" >
+        #{ontimePercent,jdbcType=VARCHAR},
+      </if>
+      <if test="hasFlyTime != null" >
+        #{hasFlyTime,jdbcType=INTEGER},
+      </if>
+      <if test="lastFlyTime != null" >
+        #{lastFlyTime,jdbcType=INTEGER},
+      </if>
+      <if test="planTakeoffTime != null" >
+        #{planTakeoffTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planLandTime != null" >
+        #{planLandTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wheelsUpTime != null" >
+        #{wheelsUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wheelsDownTime != null" >
+        #{wheelsDownTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estDepTime != null" >
+        #{estDepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estArrTime != null" >
+        #{estArrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkinDeskRange != null" >
+        #{checkinDeskRange,jdbcType=VARCHAR},
+      </if>
+      <if test="oriTerminal != null" >
+        #{oriTerminal,jdbcType=VARCHAR},
+      </if>
+      <if test="desTerminal != null" >
+        #{desTerminal,jdbcType=VARCHAR},
+      </if>
+      <if test="flightSectorCode != null" >
+        #{flightSectorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gn != null" >
+        #{gn,jdbcType=VARCHAR},
+      </if>
+      <if test="baggageCarousel != null" >
+        #{baggageCarousel,jdbcType=VARCHAR},
+      </if>
+      <if test="linkedFlightIdentity != null" >
+        #{linkedFlightIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="preFlightStatusDesc != null" >
+        #{preFlightStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oriCityTime != null" >
+        #{oriCityTime,jdbcType=VARCHAR},
+      </if>
+      <if test="desCityTime != null" >
+        #{desCityTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.FlightDynInfoTemp" >
+    update pvg_flight_dyn_info_temp
+    <set >
+      <if test="flightNo != null" >
+        flight_no = #{flightNo,jdbcType=VARCHAR},
+      </if>
+      <if test="flightDate != null" >
+        flight_date = #{flightDate,jdbcType=VARCHAR},
+      </if>
+      <if test="airportCode != null" >
+        airport_code = #{airportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="adid != null" >
+        adid = #{adid,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="oriAirport != null" >
+        ori_airport = #{oriAirport,jdbcType=VARCHAR},
+      </if>
+      <if test="desAirport != null" >
+        des_airport = #{desAirport,jdbcType=VARCHAR},
+      </if>
+      <if test="oriCity != null" >
+        ori_city = #{oriCity,jdbcType=VARCHAR},
+      </if>
+      <if test="desCity != null" >
+        des_city = #{desCity,jdbcType=VARCHAR},
+      </if>
+      <if test="flightStatus != null" >
+        flight_status = #{flightStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMileage != null" >
+        total_mileage = #{totalMileage,jdbcType=VARCHAR},
+      </if>
+      <if test="ontimePercent != null" >
+        ontime_percent = #{ontimePercent,jdbcType=VARCHAR},
+      </if>
+      <if test="hasFlyTime != null" >
+        has_fly_time = #{hasFlyTime,jdbcType=INTEGER},
+      </if>
+      <if test="lastFlyTime != null" >
+        last_fly_time = #{lastFlyTime,jdbcType=INTEGER},
+      </if>
+      <if test="planTakeoffTime != null" >
+        plan_takeoff_time = #{planTakeoffTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planLandTime != null" >
+        plan_land_time = #{planLandTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wheelsUpTime != null" >
+        wheels_up_time = #{wheelsUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wheelsDownTime != null" >
+        wheels_down_time = #{wheelsDownTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estDepTime != null" >
+        est_dep_time = #{estDepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estArrTime != null" >
+        est_arr_time = #{estArrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkinDeskRange != null" >
+        checkin_desk_range = #{checkinDeskRange,jdbcType=VARCHAR},
+      </if>
+      <if test="oriTerminal != null" >
+        ori_terminal = #{oriTerminal,jdbcType=VARCHAR},
+      </if>
+      <if test="desTerminal != null" >
+        des_terminal = #{desTerminal,jdbcType=VARCHAR},
+      </if>
+      <if test="flightSectorCode != null" >
+        flight_sector_code = #{flightSectorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gn != null" >
+        gn = #{gn,jdbcType=VARCHAR},
+      </if>
+      <if test="baggageCarousel != null" >
+        baggage_carousel = #{baggageCarousel,jdbcType=VARCHAR},
+      </if>
+      <if test="linkedFlightIdentity != null" >
+        linked_flight_identity = #{linkedFlightIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="preFlightStatusDesc != null" >
+        pre_flight_status_desc = #{preFlightStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oriCityTime != null" >
+        ori_city_time = #{oriCityTime,jdbcType=VARCHAR},
+      </if>
+      <if test="desCityTime != null" >
+        des_city_time = #{desCityTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where flight_id = #{flightId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByParamMap" parameterType="map" resultMap="QueryFlightMap">
+    SELECT
+      flight_id, flight_no, company, ori_city, des_city, flight_status, plan_takeoff_time, plan_land_time
+    FROM pvg_flight_dyn_info_temp
+    <where>
+      <if test="queryTime != null"> and flight_date = #{queryTime} </if>
+      <if test="fltNo != null"> and flight_no like concat('%',#{fltNo},'%') </if>
+      <if test="oriAirport != null"> and ori_airport = #{oriAirport} </if>
+      <if test="desAirport != null"> and des_airport = #{desAirport} </if>
+    </where>
+      order by plan_takeoff_time
+
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="long" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM pvg_flight_dyn_info_temp WHERE flight_id = #{flightId}
+  </select>
+</mapper>

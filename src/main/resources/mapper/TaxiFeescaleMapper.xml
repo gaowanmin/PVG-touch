@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.TaxiFeescaleMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.TaxiFeescale" >
+    <id column="FEESCALE_ID" property="feescaleId" jdbcType="INTEGER" />
+    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="DISTANCE" property="distance" jdbcType="VARCHAR" />
+    <result column="DAY" property="day" jdbcType="VARCHAR" />
+    <result column="NIGHT" property="night" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FEESCALE_ID, CITY_NAME, DISTANCE, DAY, NIGHT
+  </sql>
+  
+  <!-- 上海市出租车收费标准查询 -->
+  <select id="selectChargeStandard" resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from pvg_taxi_feescale
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pvg_taxi_feescale
+    where FEESCALE_ID = #{feescaleId,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.TaxiFeescale" >
+    insert into pvg_taxi_feescale
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="feescaleId != null" >
+        FEESCALE_ID,
+      </if>
+      <if test="cityName != null" >
+        CITY_NAME,
+      </if>
+      <if test="distance != null" >
+        DISTANCE,
+      </if>
+      <if test="day != null" >
+        DAY,
+      </if>
+      <if test="night != null" >
+        NIGHT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="feescaleId != null" >
+        #{feescaleId,jdbcType=INTEGER},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="distance != null" >
+        #{distance,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="night != null" >
+        #{night,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.TaxiFeescale" >
+    update pvg_taxi_feescale
+    <set >
+      <if test="cityName != null" >
+        CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="distance != null" >
+        DISTANCE = #{distance,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        DAY = #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="night != null" >
+        NIGHT = #{night,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FEESCALE_ID = #{feescaleId,jdbcType=INTEGER}
+  </update>
+</mapper>

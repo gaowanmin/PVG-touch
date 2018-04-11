@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.ResearchResultMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.ResearchResult" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="touch_id" property="touchId" jdbcType="VARCHAR" />
+    <result column="virtual_user" property="virtualUser" jdbcType="VARCHAR" />
+    <result column="DETAIL_ID" property="detailId" jdbcType="VARCHAR" />
+    <result column="SATISFY_LEVEL" property="satisfyLevel" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, touch_id, virtual_user, DETAIL_ID, SATISFY_LEVEL, CREATE_TIME, UPDATE_TIME
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from pvg_research_result
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 批量插入调查结果 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into pvg_research_result
+        (ID, touch_id, virtual_user, DETAIL_ID, SATISFY_LEVEL, CREATE_TIME, UPDATE_TIME)
+        values
+        <foreach collection ="list" item="researchResult" index= "index" separator =",">
+            (
+            #{researchResult.id,jdbcType=BIGINT},
+            #{researchResult.touchId,jdbcType=VARCHAR},
+            #{researchResult.virtualUser,jdbcType=VARCHAR},
+            #{researchResult.detailId,jdbcType=VARCHAR},
+            #{researchResult.satisfyLevel,jdbcType=VARCHAR},
+            #{researchResult.createTime,jdbcType=TIMESTAMP},
+            #{researchResult.updateTime,jdbcType=TIMESTAMP}
+            )
+        </foreach >
+    </insert>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.ResearchResult" >
+    insert into pvg_research_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="touchId != null" >
+        touch_id,
+      </if>
+      <if test="virtualUser != null" >
+        virtual_user,
+      </if>
+      <if test="detailId != null" >
+        DETAIL_ID,
+      </if>
+      <if test="satisfyLevel != null" >
+        SATISFY_LEVEL,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="touchId != null" >
+        #{touchId,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualUser != null" >
+        #{virtualUser,jdbcType=VARCHAR},
+      </if>
+      <if test="detailId != null" >
+        #{detailId,jdbcType=VARCHAR},
+      </if>
+      <if test="satisfyLevel != null" >
+        #{satisfyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.ResearchResult" >
+    update pvg_research_result
+    <set >
+      <if test="touchId != null" >
+        touch_id = #{touchId,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualUser != null" >
+        virtual_user = #{virtualUser,jdbcType=VARCHAR},
+      </if>
+      <if test="detailId != null" >
+        DETAIL_ID = #{detailId,jdbcType=VARCHAR},
+      </if>
+      <if test="satisfyLevel != null" >
+        SATISFY_LEVEL = #{satisfyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

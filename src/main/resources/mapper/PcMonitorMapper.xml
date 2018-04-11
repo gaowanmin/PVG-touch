@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.PcMonitorMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.PcMonitor" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pc_id" property="pcId" jdbcType="VARCHAR" />
+    <result column="heart_beat" property="heartBeat" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pc_id, heart_beat
+  </sql>
+  
+  <!-- 查询所有监控信息 -->
+  <select id="selectAllMonitorInfo" resultMap="BaseResultMap">
+  	 select <include refid="Base_Column_List" /> from rt_pc_monitor
+  </select>
+  
+  <!-- 根据pcId获取监控对象信息 -->
+  <select id="selectMonitorByPcId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	 select <include refid="Base_Column_List" /> from rt_pc_monitor where pc_id = #{pcId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from rt_pc_monitor
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.PcMonitor" >
+    insert into rt_pc_monitor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pcId != null" >
+        pc_id,
+      </if>
+      <if test="heartBeat != null" >
+        heart_beat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pcId != null" >
+        #{pcId,jdbcType=VARCHAR},
+      </if>
+      <if test="heartBeat != null" >
+        #{heartBeat,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.PcMonitor" >
+    update rt_pc_monitor
+    <set >
+      <if test="pcId != null" >
+        pc_id = #{pcId,jdbcType=VARCHAR},
+      </if>
+      <if test="heartBeat != null" >
+        heart_beat = #{heartBeat,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

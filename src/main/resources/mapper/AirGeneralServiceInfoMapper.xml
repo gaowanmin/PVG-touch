@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.AirGeneralServiceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.AirGeneralServiceInfo" >
+    <id column="AIR_SERVICE_ID" property="airServiceId" jdbcType="BIGINT" />
+    <result column="AIRPORT" property="airport" jdbcType="VARCHAR" />
+    <result column="PICTURE_NAME" property="pictureName" jdbcType="VARCHAR" />
+    <result column="PICTURE_URL" property="pictureUrl" jdbcType="VARCHAR" />
+    <result column="SERVICE_CODE" property="serviceCode" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="INTEGER" />
+    <result column="AIRPORT_NAME" property="airportName" jdbcType="VARCHAR" />
+    <result column="html_url_type" property="htmlUrlType" jdbcType="VARCHAR" />
+    <result column="terminal" property="terminal" jdbcType="VARCHAR" />
+    <result column="terminal_name" property="terminalName" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
+  </resultMap>
+
+    <resultMap id="serviceInfoDTOMap" type="com.rtmap.traffic.touch.model.dto.ServiceInfoDTO" extends="BaseResultMap">
+        <result column="serviceMenuId" property="serviceMenuId" jdbcType="INTEGER" />
+    </resultMap>
+  <sql id="Base_Column_List" >
+    AIR_SERVICE_ID, AIRPORT, PICTURE_NAME, PICTURE_URL, SERVICE_CODE, TITLE, SORT, AIRPORT_NAME, 
+    html_url_type, terminal, terminal_name, parent_id, parent_name
+  </sql>
+  
+  <!-- 获取机场所有基础服务列表 -->
+  <select id="selectAllGeneralServiceInfo" resultMap="serviceInfoDTOMap">
+    select 
+    <include refid="Base_Column_List" />,sm.`id` as serviceMenuId
+    from pvg_air_general_service_info si
+      left join service_menu_relate smr on smr.`service_id` = si.`AIR_SERVICE_ID`
+      left join service_menu sm on sm.`id` = smr.`menu_id`
+    where si.html_url_type = 'content' order by `SORT` ASC
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pvg_air_general_service_info
+    where AIR_SERVICE_ID = #{airServiceId,jdbcType=BIGINT}
+  </select>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.AirGeneralServiceInfo" >
+    insert into pvg_air_general_service_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="airServiceId != null" >
+        AIR_SERVICE_ID,
+      </if>
+      <if test="airport != null" >
+        AIRPORT,
+      </if>
+      <if test="pictureName != null" >
+        PICTURE_NAME,
+      </if>
+      <if test="pictureUrl != null" >
+        PICTURE_URL,
+      </if>
+      <if test="serviceCode != null" >
+        SERVICE_CODE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="airportName != null" >
+        AIRPORT_NAME,
+      </if>
+      <if test="htmlUrlType != null" >
+        html_url_type,
+      </if>
+      <if test="terminal != null" >
+        terminal,
+      </if>
+      <if test="terminalName != null" >
+        terminal_name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="parentName != null" >
+        parent_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="airServiceId != null" >
+        #{airServiceId,jdbcType=BIGINT},
+      </if>
+      <if test="airport != null" >
+        #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureName != null" >
+        #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="airportName != null" >
+        #{airportName,jdbcType=VARCHAR},
+      </if>
+      <if test="htmlUrlType != null" >
+        #{htmlUrlType,jdbcType=VARCHAR},
+      </if>
+      <if test="terminal != null" >
+        #{terminal,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalName != null" >
+        #{terminalName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="parentName != null" >
+        #{parentName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.AirGeneralServiceInfo" >
+    update pvg_air_general_service_info
+    <set >
+      <if test="airport != null" >
+        AIRPORT = #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureName != null" >
+        PICTURE_NAME = #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        PICTURE_URL = #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null" >
+        SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="airportName != null" >
+        AIRPORT_NAME = #{airportName,jdbcType=VARCHAR},
+      </if>
+      <if test="htmlUrlType != null" >
+        html_url_type = #{htmlUrlType,jdbcType=VARCHAR},
+      </if>
+      <if test="terminal != null" >
+        terminal = #{terminal,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalName != null" >
+        terminal_name = #{terminalName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="parentName != null" >
+        parent_name = #{parentName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AIR_SERVICE_ID = #{airServiceId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtmap.traffic.touch.dao.mapper.ModuleUpdateTimeMapper" >
+  <resultMap id="BaseResultMap" type="com.rtmap.traffic.touch.model.entity.ModuleUpdateTime" >
+    <id column="module_name" property="moduleName" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    module_name, update_time
+  </sql>
+  <insert id="insertSelective" parameterType="com.rtmap.traffic.touch.model.entity.ModuleUpdateTime" >
+    insert into pvg_module_updatetime
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moduleName != null" >
+        module_name,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="moduleName != null" >
+        #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rtmap.traffic.touch.model.entity.ModuleUpdateTime" >
+    update pvg_module_updatetime
+    <set >
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where module_name = #{moduleName,jdbcType=VARCHAR}
+  </update>
+
+</mapper>
